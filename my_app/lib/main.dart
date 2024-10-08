@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'screens/chat_screen.dart';
+import 'screens/chat_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
 	Widget build(BuildContext context) {
 	return Scaffold(
 		appBar: AppBar(
-		title: const Text('Chat'),
+		title: const Text('Navigator'),
 		),
 		drawer: Drawer(
 			child: ListView(
@@ -51,14 +51,18 @@ class MyApp extends StatelessWidget {
 					children: [
 		 				const DrawerHeader(
 		 				decoration: BoxDecoration(
-		 				color: Colors.blue,
+		 				color: Colors.purple,
 		 				),
-		 				child: Text('Drawer Header')
+		 				child: Text('Navigator')
 		 				),
 		 				ListTile(
-		 				title: const Text('Item 1'),
+		 				title: const Text('Chat Room'),
 		 
 						 	onTap: () {
+                Navigator.push(context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(),
+                ),);
 
 		 
 		 					},	
