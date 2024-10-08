@@ -1,0 +1,20 @@
+schemaVersion: v0.2
+prepare:
+  steps:
+    - name: Prepare Flutter Environment
+      command: nix-env -i -f ~/app/configuration.nix
+test:
+  steps: []
+run:
+  frontend-1:
+    steps:
+      - name: Change Directory
+        command: cd /home/user/app/my_app
+      - name: Run Webserver
+        command: python3 -m http.server 3000 -d /home/user/app/my_app/build/web/
+    plan: 8
+    replicas: 1
+    isPublic: true
+    network:
+      path: /app
+      stripPath: true
