@@ -1,3 +1,9 @@
+github.com/ambelovsky/go-structs v1.1.0 h1:LXj4/mHnYw0qhXQhOo96+ULGQ88H8qMcZd5SHef8boY=
+github.com/ambelovsky/go-structs v1.1.0/go.mod h1:zN3RBXQvxgjjq/Q/WZS7p5AEK+qC9mNg7ycnvoQ63Ak=
+github.com/ambelovsky/gosf v0.0.0-20201109201340-237aea4d6109 h1:Tp8GVfUOEmJftBqi4+/aXTwJzm24POo6wIHeuTqaT+Y=
+github.com/ambelovsky/gosf v0.0.0-20201109201340-237aea4d6109/go.mod h1:MUREokfMKREm1fOm2babarrkYdk/dGHWY+ITC3qHHPQ=
+github.com/ambelovsky/gosf-socketio v0.0.0-20220810204405-0f97832ec7af h1:SXdLHP09xttaOeI9q3+strkbVIAmdo6CJwa9EqqMnug=
+github.com/ambelovsky/gosf-socketio v0.0.0-20220810204405-0f97832ec7af/go.mod h1:1w9JQkj1okH2vn3f95PdSbVvGg6d+x+TcaXQFpCfxmA=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gofrs/uuid v4.0.0+incompatible h1:1SD/1F5pU8p29ybwgQSwpQk+mwdRrXCYuPhW6m+TnJw=
@@ -8,6 +14,12 @@ github.com/googollee/go-socket.io v1.7.0 h1:ODcQSAvVIPvKozXtUGuJDV3pLwdpBLDs1Uoq
 github.com/googollee/go-socket.io v1.7.0/go.mod h1:0vGP8/dXR9SZUMMD4+xxaGo/lohOw3YWMh2WRiWeKxg=
 github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
 github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
+github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
+github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/mitchellh/mapstructure v1.5.0 h1:jeMsZIYE/09sWLaz43PL7Gy6RuMjD2eJVyuac5Z2hdY=
+github.com/mitchellh/mapstructure v1.5.0/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=

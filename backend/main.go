@@ -1,75 +1,79 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
-	socketio "github.com/googollee/go-socket.io"
-	"github.com/googollee/go-socket.io/engineio"
-	"github.com/googollee/go-socket.io/engineio/transport"
-	"github.com/googollee/go-socket.io/engineio/transport/polling"
-	"github.com/googollee/go-socket.io/engineio/transport/websocket"
+  "fmt"
+  "log"
+  "net/http"
+  "encoding/json"
+  "github.com/gorilla/websocket"
 )
 
-// Easier to get running with CORS. Thanks for help @Vindexus and @erkie
-var allowOriginFunc = func(r *http.Request) bool {
-	return true
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
+
+var clients = make(map[*websocket.Conn]bool)
+var broadcast = make(chan [] byte)
+
+type Message struct {
+	Name string `json:"username"`
+	Text string `json:"text"`
+}
+
+func handleConnections(w http.ResponseWriter, r *http.Request) {
+  ws, err := upgrader.Upgrade(w, r , nil)
+  if err != nil {
+  	log.Fatal(err)
+  }
+  defer ws.Close()
+
+  clients[ws] = true
+
+  for {
+	 //Read message from the client
+	 messageType, p , err := ws.ReadMessage()
+	 if err != nil {
+	 	log.Fatal(err)
+	 }
+
+	 var message Message
+	 err_2 := json.Unmarshal(p, &message)
+	if err_2 != nil {
+		log.Printf("Error in unrmashalling JSON")
+		log.Fatal(err_2)
+	}
+	//Sending message to all clients
+	if (messageType == websocket.TextMessage) {
+		broadcast <- p
+		}
+	}
+}
+
+func handleMessages() {
+	for {
+		msg := <-broadcast
+		//Send it out to every client that is currently connected
+		for client := range clients{
+		  log.Printf("Sending %s",msg)
+		  msg, _ := json.Marshal(msg)
+		  err := client.WriteMessage(websocket.TextMessage, msg)
+		  if err != nil {
+		  	log.Printf("error: %v", err)
+			client.Close()
+			delete(clients,client)
+		  }
+		}
+	}
 }
 
 func main() {
-	server := socketio.NewServer(&engineio.Options{
-		Transports: []transport.Transport{
-			&polling.Transport{
-				CheckOrigin: allowOriginFunc,
-			},
-			&websocket.Transport{
-				CheckOrigin: allowOriginFunc,
-			},
-		},
-	})
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+  	fmt.Fprintf(w, "Chat Backend started and running")})
 
-	server.OnConnect("/", func(s socketio.Conn) error {
-		s.SetContext("")
-		log.Println("connected:", s.ID())
-		return nil
-	})
-
-	server.OnEvent("/", "notice", func(s socketio.Conn, msg string) {
-		log.Println("notice:", msg)
-		s.Emit("reply", "have "+msg)
-	})
-
-	server.OnEvent("/chat", "msg", func(s socketio.Conn, msg string) string {
-		log.Println("chat:", msg)
-		s.SetContext(msg)
-		return "recv " + msg
-	})
-
-	server.OnEvent("/", "bye", func(s socketio.Conn) string {
-		last := s.Context().(string)
-		s.Emit("bye", last)
-		s.Close()
-		return last
-	})
-
-	server.OnError("/", func(s socketio.Conn, e error) {
-		log.Println("meet error:", e)
-	})
-
-	server.OnDisconnect("/", func(s socketio.Conn, reason string) {
-		log.Println("closed", reason)
-	})
-
-	go func() {
-		if err := server.Serve(); err != nil {
-			log.Fatalf("socketio listen error: %s\n", err)
-		}
-	}()
-	defer server.Close()
-
-	http.Handle("/socket/", server)
-	http.Handle("/", http.FileServer(http.Dir("../asset")))
-
-	log.Println("Serving at localhost:3000...")
-	log.Fatal(http.ListenAndServe(":3000", nil))
+  go handleMessages()
+  http.HandleFunc("/backend/socket", handleConnections)
+  fmt.Println("WebSocket server started at ws://localhost:3000/ws")
+  fmt.Println(http.ListenAndServe("0.0.0.0:3000", nil))
 }
