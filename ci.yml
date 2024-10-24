@@ -3,18 +3,30 @@ prepare:
   steps:
     - name: Prepare Flutter Environment
       command: nix-env -i -f ~/app/configuration.nix
+    - name: Build Flutter Web App
+      command: cd /home/user/app/my_app/ && flutter clean && flutter build web
+    - name: Build Backend
+      command: cd /home/user/app/backend/ && go build -o chatBackend
 test:
   steps: []
 run:
   frontend-1:
     steps:
-      - name: Change Directory
-        command: cd /home/user/app/my_app
       - name: Run Webserver
-        command: python3 -m http.server 3000 -d /home/user/app/my_app/build/web/
+        command: cd /home/user/app/my_app/build/web && python3 -m http.server 3000
     plan: 8
     replicas: 1
     isPublic: true
     network:
-      path: /app
-      stripPath: true
+      path: /
+      stripPath: false
+  backend-1:
+    steps:
+      - name: Run Backend
+        command: cd /home/user/app/backend/ && ./chatBackend
+    plan: 8
+    replicas: 1
+    isPublic: true
+    network:
+      path: /backend
+      stripPath: false
