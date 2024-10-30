@@ -16,4 +16,5 @@ with pkgs; [
   glib
   dbus
   pcre2
+  go
 ]
