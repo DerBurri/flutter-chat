@@ -8,70 +8,86 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Chat Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
-  class MyHomePage extends StatelessWidget {
-	@override
-	Widget build(BuildContext context) {
-	return Scaffold(
-		appBar: AppBar(
-		title: const Text('Navigator'),
-		),
-		drawer: Drawer(
-			child: ListView(
-				padding: EdgeInsets.zero,
-					children: [
-		 				const DrawerHeader(
-		 				decoration: BoxDecoration(
-		 				color: Colors.purple,
-		 				),
-		 				child: Text('Navigator')
-		 				),
-		 				ListTile(
-		 				title: const Text('Chat Room'),
-		 
-						 	onTap: () {
-                Navigator.push(context,
-                MaterialPageRoute(
-                  builder: (context) => ChatScreen(),
-                ),);
-
-		 
-		 					},	
-	 					),
-						]
- 					),
-		),
-		
-	);
-	}
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigator'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.purple,
+              ),
+              child: Text(
+                'Navigator',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              title: const Text('Chat Room'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Welcome to the Flutter Chat App!',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'This chat application template is designed for easy deployment with Landscape Deploy. '
+              'It uses a robust backend in Go, featuring WebSocket protocol support to deliver real-time chat messaging. '
+              'The frontend is built with Flutter, ensuring a seamless cross-platform experience.',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatScreen(),
+                  ),
+                );
+              },
+              child: const Text('Enter Chat Room'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
-
