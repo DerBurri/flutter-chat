@@ -1,0 +1,9 @@
+{
+  "Workspace": "boost",
+  "Links": {
+    "Tutorial": "https://codesphere.com/articles/flutter-web-app-on-codesphere-with-landscape-deploy",
+  },
+  "Categories": ["Framework"],
+  "Contributors": ["DerBurri"],
+  "Title": "Flutter Chat App with Go on Landscape"
+}
